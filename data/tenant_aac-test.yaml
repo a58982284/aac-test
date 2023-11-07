@@ -1,0 +1,24 @@
+---
+apic:
+  tenants:
+    - name: 'aac-test'
+      description: Managed by Terraform
+      vrfs:
+        - name: 'vrf1'
+      bridge_domains:
+        - name: 'bd-db'
+          description: Managed by Terraform
+          arp_flooding: false
+          unknown_unicast: proxy
+          vrf: vrf1
+          subnets:
+            - ip: 20.20.20.1/24
+              nd_ra_prefix: false
+        - name: 'bd_web'
+          description: Managed by Terraform
+          arp_flooding: false
+          unknown_unicast: proxy
+          vrf: vrf1
+          subnets:
+            - ip: 10.10.10.1/24
+              nd_ra_prefix: false
