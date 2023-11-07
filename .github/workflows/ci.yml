@@ -14,9 +14,9 @@ on:
   workflow_dispatch:
 
 env:
-  apic_url: "${{ secrets.TF_VAR_APIC_URL }}"
-  apic_user: "${{ secrets.TF_VAR_APIC_USER }}"
-  apic_pwd: "${{ secrets.TF_VAR_APIC_PWD }}"
+  APIC_URL: "${{ secrets.TF_VAR_APIC_URL }}"
+  APIC_USER: "${{ secrets.TF_VAR_APIC_USER }}"
+  APIC_PWD: "${{ secrets.TF_VAR_APIC_PWD }}"
 
 permissions:
   contents: read
@@ -62,9 +62,11 @@ jobs:
       - name: Terraform Validate
         run: terraform validate -no-color
 
+      - name: check env
+        run: echo $APIC_USER
       # Generates an execution plan for Terraform
       - name: Terraform Plan
-        run: terraform plan --no-color  -var 'apic_user=${{ apic_user }}' -var 'apic_pwd=${{ apic_pwd }}' -var 'apic_url=${{ apic_url }}'
+        run: terraform plan --no-color -var 'apic_user=$APIC_USER' -var 'apic_pwd=$APIC_PWD' -var 'apic_url=$APIC_URL'
       - run: echo ${{ steps.plan.outputs.stdout }}
       - run: echo ${{ steps.plan.outputs.stderr }}
       - run: echo ${{ steps.plan.outputs.exitcode }}
